@@ -86,6 +86,14 @@ var Engine = (function(global) {
 
     // //
     // console.log("FPS: " + 1 / dt);
+
+    /** collision */
+    if (checkCollisions()) {
+      setTimeout(() => {
+        alert("You die!");
+        player.reset();
+      }, 300);
+    }
   }
 
   function checkCollisions() {
@@ -162,14 +170,6 @@ var Engine = (function(global) {
     }
 
     renderEntities();
-
-    /** collision */
-    if (checkCollisions()) {
-      setTimeout(() => {
-        alert("You die!");
-        player.reset();
-      }, 300);
-    }
   }
 
   /* This function is called by the render function and is called on each game
