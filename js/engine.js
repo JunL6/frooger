@@ -12,6 +12,8 @@
  * This engine makes the canvas' context (ctx) object globally available to make
  * writing app.js a little simpler to work with.
  */
+const ENEMY_WIDTH = 75;
+const PLAYER_WIDTH = 65;
 
 var Engine = (function(global) {
   /* Predefine the variables we'll be using within this scope,
@@ -81,7 +83,25 @@ var Engine = (function(global) {
    */
   function update(dt) {
     updateEntities(dt);
-    // checkCollisions();
+
+    // //
+    // console.log("FPS: " + 1 / dt);
+  }
+
+  function checkCollisions() {
+    let result = false;
+    allEnemies.map(enemy => {
+      if (enemy.y === player.y) {
+        if (
+          enemy.x + ENEMY_WIDTH >= player.x &&
+          player.x + PLAYER_WIDTH >= enemy.x
+        ) {
+          console.log(enemy.x + ENEMY_WIDTH + "COLLISON!!! " + player.x);
+          result = true;
+        }
+      }
+    });
+    return result;
   }
 
   /* This is called by the update function and loops through all of the
@@ -142,6 +162,14 @@ var Engine = (function(global) {
     }
 
     renderEntities();
+
+    /** collision */
+    if (checkCollisions()) {
+      setTimeout(() => {
+        alert("You die!");
+        player.reset();
+      }, 300);
+    }
   }
 
   /* This function is called by the render function and is called on each game

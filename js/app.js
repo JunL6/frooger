@@ -3,7 +3,7 @@ const COL_WIDTH = 101;
 const CANVAS_WIDTH = 505;
 const CANVAS_HEIGHT = 606;
 const PLAYER_STARTPOINT_X = 200;
-const PLAYER_STARTPOINT_Y = 41.5 + 83 * 4;
+const PLAYER_STARTPOINT_Y = 394;
 
 // Enemies our player must avoid
 var Enemy = function(x = 0, y = 83, speed = 40) {
@@ -37,6 +37,8 @@ Enemy.prototype.update = function(dt) {
 // Draw the enemy on the screen, required method for game
 Enemy.prototype.render = function() {
   ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+  // console.log(this.x, this.y);
+  // debugger;
 };
 
 // Now write your own player class
@@ -65,7 +67,11 @@ Player.prototype.handleInput = function(direction) {
       break;
     case "up":
       // this.update(0, -83);
-      this.y += -83;
+      /** player can't go above the map */
+      if (this.y < 0) {
+        break;
+      }
+      this.y += -ROW_HEIGHT;
       break;
     case "right":
       // this.update(83, 0);
@@ -76,15 +82,20 @@ Player.prototype.handleInput = function(direction) {
       break;
     case "down":
       // this.update(0, 83);
-      this.y += 83;
+      /** player can't go under the map */
+      if (this.y + ROW_HEIGHT > 400) {
+        break;
+      }
+      this.y += ROW_HEIGHT;
       break;
   }
   console.log("x: " + this.x + ", y: " + this.y);
   /** see if the player reaches the water, if so, bring him back to start point with .reset() */
   if (this.y < 0) {
     setTimeout(() => {
+      alert("You win!");
       this.reset();
-    }, 500);
+    }, 300);
   }
 };
 
@@ -101,7 +112,8 @@ let enemy2 = new Enemy(100, 62 + 83, 30);
 let enemy3 = new Enemy(100 + 300, 62 + 83, 30);
 let enemy4 = new Enemy(350, 62 + 166, 60);
 let enemy5 = new Enemy(350 + 400, 62 + 166, 60);
-const allEnemies = [enemy0, enemy1, enemy2, enemy3, enemy4, enemy5];
+// const allEnemies = [enemy0, enemy1, enemy2, enemy3, enemy4, enemy5];
+const allEnemies = [enemy0];
 // Place the player object in a variable called player
 const player = new Player();
 
