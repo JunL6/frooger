@@ -14,6 +14,7 @@
  */
 const ENEMY_WIDTH = 75;
 const PLAYER_WIDTH = 65;
+let isGameOver = false;
 
 var Engine = (function(global) {
   /* Predefine the variables we'll be using within this scope,
@@ -90,9 +91,12 @@ var Engine = (function(global) {
     /** collision */
     if (checkCollisions()) {
       setTimeout(() => {
-        alert("You die!");
-        player.reset();
-      }, 300);
+        if (!isGameOver) {
+          isGameOver = true;
+          alert("You die!");
+          reset();
+        }
+      }, 3);
     }
   }
 
@@ -193,6 +197,8 @@ var Engine = (function(global) {
    */
   function reset() {
     // noop
+    player.reset();
+    isGameOver = false;
   }
 
   /* Go ahead and load all of the images we know we're going to need to
