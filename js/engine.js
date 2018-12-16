@@ -15,6 +15,8 @@
 const ENEMY_WIDTH = 75;
 const PLAYER_WIDTH = 65;
 let isGameOver = false;
+let initTime;
+let seconds;
 
 var Engine = (function(global) {
   /* Predefine the variables we'll be using within this scope,
@@ -70,6 +72,7 @@ var Engine = (function(global) {
   function init() {
     reset();
     lastTime = Date.now();
+    initTime = new Date().getTime();
     main();
   }
 
@@ -174,6 +177,10 @@ var Engine = (function(global) {
     }
 
     renderEntities();
+
+    /** seconds */
+    seconds = (new Date().getTime() - initTime) / 1000;
+    document.getElementById("seconds").innerHTML = seconds;
   }
 
   /* This function is called by the render function and is called on each game
@@ -199,6 +206,7 @@ var Engine = (function(global) {
     // noop
     player.reset();
     isGameOver = false;
+    initTime = new Date().getTime();
   }
 
   /* Go ahead and load all of the images we know we're going to need to
