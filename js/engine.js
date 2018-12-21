@@ -92,15 +92,15 @@ var Engine = (function(global) {
     // console.log("FPS: " + 1 / dt);
 
     /** collision */
-    if (checkCollisions()) {
-      setTimeout(() => {
-        if (!isGameOver) {
-          isGameOver = true;
-          alert("You die!");
-          reset();
-        }
-      }, 3);
-    }
+    // if (checkCollisions()) {
+    //   setTimeout(() => {
+    //     if (!isGameOver) {
+    //       isGameOver = true;
+    //       alert(`You die! You lasted ${seconds} second.`);
+    //       reset();
+    //     }
+    //   }, 3);
+    // }
   }
 
   function checkCollisions() {
@@ -181,6 +181,15 @@ var Engine = (function(global) {
     /** seconds */
     seconds = (new Date().getTime() - initTime) / 1000;
     document.getElementById("seconds").innerHTML = seconds;
+
+    /** collision */
+    if (checkCollisions()) {
+      if (!isGameOver) {
+        isGameOver = true;
+        alert(`You die! You lasted ${seconds} second.`);
+        reset();
+      }
+    }
   }
 
   /* This function is called by the render function and is called on each game
@@ -227,4 +236,6 @@ var Engine = (function(global) {
    * from within their app.js files.
    */
   global.ctx = ctx;
+
+  /** QUESTION: what is global? */
 })(this);
